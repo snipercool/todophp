@@ -36,6 +36,8 @@
                         <input class="form-control-file" type="file" name="avatar" id="avatar" required>
                     </div>
                     <div class="form-group">
+                    <div class="alert alert-success" id="usercheck" style="display:none;">Your <strong>Username</strong> is ok.</div>
+                    <div class="alert alert-danger" id="usercheck2" style="display:none;">please change your <strong>Username</strong>!</div>
                         <label for="username">Username:</label>
                         <input class="form-control" type="text" name="username" id="username" required>
                     </div>
@@ -52,12 +54,6 @@
                     <div class="form-group">
                         <label for="education">Education:</label>
                         <input class="form-control" type="text" name="education" id="education" required>
-                    </div>
-                    <div class="form-group">
-                    <div class="alert alert-success" id="usercheck" style="display:none;">Your <strong>Username</strong> is ok.</div>
-                    <div class="alert alert-danger" id="usercheck2" style="display:none;">please change your <strong>Username</strong>!</div>
-                        <label for="username">Username:</label>
-                        <input class="form-control" type="text" name="username" id="username" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password:</label>
