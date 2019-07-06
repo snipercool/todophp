@@ -1,4 +1,18 @@
-<!DOCTYPE html>
+<?php
+    include_once("bootstrap.php");
+
+    session_start();
+
+    if (isset($_SESSION['username'])) {
+        $user = new User();
+        $user->setUsername($_SESSION['username']);
+        $id = $user->getUserId();
+        $user->setUserId($id);
+    } else {
+        header('location: login.php');
+    }
+    
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
