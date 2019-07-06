@@ -1,18 +1,18 @@
-$("#email").on("keyup", function(e){
-    let email = $("#email").val();
-    console.log(email);
+$("#username").on("keyup", function(e){
+    let username = $("#username").val();
+    console.log(username);
     $.ajax({
         method: "POST",
-        url: "ajax/emailchecker.php",
-        data: { email: email},
+        url: "ajax/check_username.php",
+        data: { username: username},
         dataType:'json'
     })
         .done(function( res ) {
             if(res.status =="success"){
-                let check = $("#mailcheck");
+                let check = $("#usercheck");
                 check.css("display", "block");
             } else {
-                let check = $("#mailcheck2");
+                let check = $("#usercheck2");
                 check.css("display", "block");
             }
         });

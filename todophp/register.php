@@ -44,6 +44,8 @@
                         <input class="form-control" type="text" name="fullname" id="fullname" required>
                     </div>
                     <div class="form-group">
+                    <div class="alert alert-success" id="mailcheck" style="display:none;">Your <strong>email</strong> is ok.</div>
+                    <div class="alert alert-danger" id="mailcheck2" style="display:none;">please change your <strong>email</strong>!</div>
                         <label for="email">Email:</label>
                         <input class="form-control" type="text" name="email" id="email" required>
                     </div>
@@ -52,6 +54,8 @@
                         <input class="form-control" type="text" name="education" id="education" required>
                     </div>
                     <div class="form-group">
+                    <div class="alert alert-success" id="usercheck" style="display:none;">Your <strong>Username</strong> is ok.</div>
+                    <div class="alert alert-danger" id="usercheck2" style="display:none;">please change your <strong>Username</strong>!</div>
                         <label for="username">Username:</label>
                         <input class="form-control" type="text" name="username" id="username" required>
                     </div>
@@ -73,8 +77,8 @@
 		src="https://code.jquery.com/jquery-3.3.1.min.js"
 		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 		crossorigin="anonymous"></script>
-  <script language="JavaScript" type="text/javascript" src="js/check_email.js"></script>
-  <script language="JavaScript" type="text/javascript" src="js/check_username.js"></script>
+  <script language="JavaScript" type="text/javascript" src="js/emailchecker.js"></script>
+  <script language="JavaScript" type="text/javascript" src="js/userchecker.js"></script>
   <script src="js/bootstrap.js"></script>
 </body>
 </html>

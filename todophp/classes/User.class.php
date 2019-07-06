@@ -194,4 +194,53 @@
                 }
             
         }
+
+        public static function findEmail($email){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("select * from user where email = :email limit 1");
+            $statement->bindValue(":email", $email);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            if(!empty($result)){
+                    return true;
+            }else{
+                    return false;
+            }
+            
+        }
+
+        public static function emailCheck($email){
+            $mail = self::findEmail($email);
+            
+            // PDO returns false if no records are found so let's check for that
+            if($mail == false){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public static function findUser($username){
+            $conn = Db::getInstance();
+            $statement = $conn->prepare("select * from user where username = :username limit 1");
+            $statement->bindValue(":username", $username);
+            $statement->execute();
+            $result =  $statement->fetch(PDO::FETCH_ASSOC);
+            if(!empty($result)){
+                    return true;
+            }else{
+                    return false;
+            }
+        }
+
+        public static function userCheck($username){
+            $user = self::findUser($username);
+            
+            // PDO returns false if no records are found so let's check for that
+            if($user == false){
+                return true;
+            } else {
+                return false;
+            }
+    }
     }
