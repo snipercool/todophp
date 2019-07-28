@@ -1,5 +1,6 @@
 <?php
-    include_once("../bootstrap.php");
+    include_once("../classes/User.class.php");
+    include_once("../classes/Db.class.php");
         $email = $_POST['email'];
         $response = [];
     if( User::emailCheck($email) ){

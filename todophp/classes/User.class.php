@@ -1,6 +1,6 @@
 <?php
 
-    require_once("../bootstrap.php");
+require_once("Db.class.php");
 
 
     class User {
@@ -9,8 +9,6 @@
         private $password;
         private $email;
         private $education;
-        private $avatar;
-        private $passwordConfirmation;
 
 
         /**
@@ -97,50 +95,9 @@
         }
 
 
-        /**
-         * Get the value of passwordConfirmation
-         */ 
-        public function getPasswordConfirmation()
-        {
-                return $this->passwordConfirmation;
-        }
 
         /**
-         * Set the value of passwordConfirmation
-         *
-         * @return  self
-         */ 
-        public function setPasswordConfirmation($passwordConfirmation)
-        {
-                $this->passwordConfirmation = $passwordConfirmation;
-
-                return $this;
-        }
-
-
-        /**
-         * Get the value of avatar
-         */ 
-        public function getAvatar()
-        {
-                return $this->avatar;
-        }
-
-        /**
-         * Set the value of avatar
-         *
-         * @return  self
-         */ 
-        public function setAvatar($avatar)
-        {
-                $this->avatar = $avatar;
-
-                return $this;
-        }
-        
-
-        /**
-         * Get the value of description
+         * Get the value of education
          */ 
         public function getEducation()
         {
@@ -148,7 +105,7 @@
         }
 
         /**
-         * Set the value of description
+         * Set the value of education
          *
          * @return  self
          */ 
@@ -165,27 +122,19 @@
          */
         public function register() {
 
-                $password = Security::hash($this->password);
+                $password = Security::verifypasswords($this->password, PASSWORD_BCRYPT);
         
                 try {
                     $conn = Db::getInstance();
-                    $statement = $conn->prepare('INSERT INTO user (username, fullname, email, password, education) values (:fullname, :username, :email, :password)');
-                    $statement->bindParam(':fullname', $this->fullname);
+                    $statement = $conn->prepare('INSERT INTO user (username, fullname, email, password, education) values (:fullname, :username, :email, :password, :education)');
                     $statement->bindParam(':username', $this->username);
+                    $statement->bindParam(':fullname', $this->fullname);
                     $statement->bindParam(':email', $this->email);
-                    $statement->bindParam(':password', $password);  
-                    $statement->execute();
-                
-                    $getData = $conn->prepare('select * from user where username = :username');
-                    $getData->bindParam(':username', $this->username);
-                    $getData->execute();
-                    $data = $getData->fetchAll();
-                
-                    if(!empty($data)){
-                        return array($data[0]['id'], $data[0]['username'], $data[0]['email']);
-                    }else{
-                        return false;
-                    }
+                    $statement->bindParam(':password', $password);
+                    $statement->bindParam(':education', $this->education);  
+                    $result = $statement->execute();
+                        return $result;
+                        return true;
 
         
                 } catch ( Throwable $t ) {
@@ -236,7 +185,6 @@
         public static function userCheck($username){
             $user = self::findUser($username);
             
-            // PDO returns false if no records are found so let's check for that
             if($user == false){
                 return true;
             } else {

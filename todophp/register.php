@@ -1,20 +1,39 @@
 <?php
 
-	require_once("bootstrap.php");
+    require_once("bootstrap.php");
+
 	
 	if ( !empty($_POST)) {
-        $target_dir = "images/uploads/";
-        $target_file = $target_dir . $_FILES["avatar"]["name"];
-		$user = new User();
-		$user->setFullname(htmlspecialchars($_POST['fullname']));
-		$user->setUsername(htmlspecialchars($_POST['username']));        
-        $user->setEmail(htmlspecialchars($_POST['email']));
-        $user->setEducation(htmlspecialchars($_POST['education']));
-		$user->setPassword(htmlspecialchars($_POST['password']));
-        $user->setPasswordConfirmation($_POST['password_confirmation']);
-        $user->setAvatar($target_file);
-		
-
+		try {
+            $security = new Security();
+            $security->password = ($_POST['password']);
+            $security->passwordConfirmation = $_POST['password_confirmation'];
+            echo("<script>console.log('whooptiedoop');</script>");
+            
+            if ($security->verifypasswords()) {
+                $user = new User();
+                $user->setFullname(($_POST['fullname']));
+                $user->setUsername(($_POST['username']));        
+                $user->setEmail(($_POST['email']));
+                $user->setEducation(($_POST['education']));
+                $user->setPassword(($_POST['password']));
+                echo("<script>console.log('verify');</script>");
+            
+            if($user->emailCheck($_POST['email']) && $user->userCheck($_POST['username'])){
+                echo("<script>console.log('check');</script>");
+                if ($user->register()) {
+                    $_SESSION['username'] = $user->getUsername();
+                    echo("<script>console.log('session ses');</script>");
+                }
+            }else{
+                echo '<div class="alert alert-danger" id="error">Something went <strong>wrong</strong>!</div>';
+            }
+            }else{
+                echo '<div class="alert alert-danger" id="error">Something went <strong>wrong</strong>!</div>';
+            }
+        } catch (\Throwable $th) {
+                //throw $th;
+        }
 	}
     
    
@@ -23,18 +42,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>Todo</title>
   <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/master.css">
 </head>
 <body>
     <div class="container">
         <div class="form-group">
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <h1>Sign up</h1>
-                    <div class="form-group">
-                        <label for="avatar">Avatar:</label>
-                        <input class="form-control-file" type="file" name="avatar" id="avatar" required>
-                    </div>
                     <div class="form-group">
                     <div class="alert alert-success" id="usercheck" style="display:none;">Your <strong>Username</strong> is ok.</div>
                     <div class="alert alert-danger" id="usercheck2" style="display:none;">please change your <strong>Username</strong>!</div>
@@ -57,22 +73,19 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password:</label>
-                        <input class="form-control" type="text" name="password" id="password" required>
+                        <input class="form-control" type="password" name="password" id="password" required>
                     </div>
                     <div class="form-group">
                         <label for="password_confirmation">Password confirmation:</label>
-                        <input class="form-control" type="text" name="password_confirmation" id="password_confirmation" required>
+                        <input class="form-control" type="password" name="password_confirmation" id="password_confirmation" required>
                     </div>
                     <div class="form-group">
-                        <input class="btn btn-primary" type="button" value="Submit">
+                        <input class="btn btn-primary" type="submit" value="Submit">
                     </div>
             </form>
         </div>
     </div>
-    <script
-		src="https://code.jquery.com/jquery-3.3.1.min.js"
-		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-		crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script language="JavaScript" type="text/javascript" src="js/emailchecker.js"></script>
   <script language="JavaScript" type="text/javascript" src="js/userchecker.js"></script>
   <script src="js/bootstrap.js"></script>

@@ -1,5 +1,5 @@
 <?php
-    abstract class Database{
+    abstract class Db{
         private static $conn;
         private static function getConfig(){
             // get the config file
@@ -13,7 +13,7 @@
                 $baseName = $config['database'];
                 $username = $config['user'];
                 $password = $config['password'];
-                self::$conn = new PDO('mysql:host=localhost;dbname='.$baseName.';charset=utf8mb4', $user, $password);
+                self::$conn = new PDO('mysql:host=localhost;dbname='.$baseName.';charset=utf8mb4', $username, $password);
                 return self::$conn;
             }
             
