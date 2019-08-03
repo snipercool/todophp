@@ -1,6 +1,6 @@
 $("#email").on("keyup", function(e){
     let email = $("#email").val();
-    console.log(email);
+    //console.log(email);
     $.ajax({
         method: "POST",
         url: "ajax/emailchecker.php",
@@ -11,6 +11,8 @@ $("#email").on("keyup", function(e){
             if(res.status =="success"){
                 let check = $("#mailcheck");
                 check.css("display", "block");
+                let checkalert = $("#mailcheck2");
+                checkalert.css("display", "none");
             } else {
                 let check = $("#mailcheck2");
                 check.css("display", "block");

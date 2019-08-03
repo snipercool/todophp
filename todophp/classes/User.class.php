@@ -1,12 +1,14 @@
 <?php
 
 require_once("Db.class.php");
+require_once("Security.class.php");
 
 
     class User {
         private $username;
         private $fullname;
         private $password;
+        private $passwordConfirmation;
         private $email;
         private $education;
 
@@ -116,33 +118,77 @@ require_once("Db.class.php");
                 return $this;
         }
         
+        /**
+         * Get the value of passwordConfirmation
+         */ 
+        public function getPasswordConfirmation()
+        {
+                return $this->passwordConfirmation;
+        }
+
+        /**
+         * Set the value of education
+         *
+         * @return  self
+         */ 
+        public function setPasswordConfirmation($passwordConfirmation)
+        {
+                $this->passwordConfirmation = $passwordConfirmation;
+
+                return $this;
+        }
+
 
         /**
          * @return boolean - true if registration, false if unsuccessful.
          */
         public function register() {
-
-                $password = Security::verifypasswords($this->password, PASSWORD_BCRYPT);
-        
-                try {
-                    $conn = Db::getInstance();
-                    $statement = $conn->prepare('INSERT INTO user (username, fullname, email, password, education) values (:fullname, :username, :email, :password, :education)');
-                    $statement->bindParam(':username', $this->username);
-                    $statement->bindParam(':fullname', $this->fullname);
-                    $statement->bindParam(':email', $this->email);
-                    $statement->bindParam(':password', $password);
-                    $statement->bindParam(':education', $this->education);  
-                    $result = $statement->execute();
-                        return $result;
-                        return true;
-
-        
-                } catch ( Throwable $t ) {
-                    return false;
-        
-                }
+                        try {
+                                $password = Security::hash($this->password);
+                                $conn = Db::getInstance();
+                                $statement = $conn->prepare('INSERT INTO user (username, fullname, email, password, education) values (:username, :fullname, :email, :password, :education)');
+                                $statement->bindParam(':username', $this->username);
+                                $statement->bindParam(':fullname', $this->fullname);
+                                $statement->bindParam(':email', $this->email);
+                                $statement->bindParam(':password', $password);
+                                $statement->bindParam(':education', $this->education);  
+                                $statement->execute();
+                                    return $statement;
+                                    return true;
+                    
+                            } catch ( Throwable $t ) {
+                                return false;
+                    
+                            }
+                
             
         }
+
+        public function login() {
+                try {
+                        $password = Security::hash($this->password);
+                        $conn = Db::getInstance();
+                        $statement = $conn->prepare("SELECT * FROM user WHERE username = :username");
+                        $statement->bindParam(':username', $this->username); 
+                        $statement->execute();
+                        $result = $statement->fetch(PDO::FETCH_ASSOC);
+                            
+                        if (!empty($result)) {
+                               if (password_verify($this->password, $result['password'])){
+                                     return true;
+                               }
+                        } else {
+                                return false;
+                        }
+                        
+            
+                    } catch ( Throwable $t ) {
+                        return false;
+            
+                    }
+        
+    
+}
 
         public static function findEmail($email){
             $conn = Db::getInstance();
@@ -191,4 +237,13 @@ require_once("Db.class.php");
                 return false;
             }
     }
+
+    public static function passwordCheck($password, $passwordConfirmation){
+        
+        if($password == $passwordConfirmation){
+            return true;
+        } else {
+            return false;
+        }
+}
     }

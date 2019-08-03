@@ -1,22 +1,23 @@
-$("#username").on("keyup", function(e){
-    let username = $("#username").val();
-    //console.log(username);
+$("#password_confirmation").on("keyup", function(e){
+    let passwordConfirmation = $("#password_confirmation").val();
+    let password = $("#password").val();
     $.ajax({
         method: "POST",
-        url: "ajax/userchecker.php",
-        data: { username: username},
+        url: "ajax/passwordchecker.php",
+        data: { passwordConfirmation: passwordConfirmation,
+                password: password},
         dataType:'json'
     })
         .done(function( res ) {
             if(res.status =="success"){
-                let check = $("#usercheck");
+                let check = $("#passwordcheck");
                 check.css("display", "block");
-                let checkalert = $("#usercheck2");
+                let checkalert = $("#passwordcheck2");
                 checkalert.css("display", "none");
                 //console.log("succes");
                 
             } else {
-                let check2 = $("#usercheck2");
+                let check2 = $("#passwordcheck2");
                 check2.css("display", "block");
                 //console.log("failed");
             }

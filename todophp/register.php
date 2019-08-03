@@ -3,34 +3,25 @@
     require_once("bootstrap.php");
 
 	
-	if ( !empty($_POST)) {
-		try {
-            $security = new Security();
-            $security->password = ($_POST['password']);
-            $security->passwordConfirmation = $_POST['password_confirmation'];
-            echo("<script>console.log('whooptiedoop');</script>");
-            
-            if ($security->verifypasswords()) {
+	if ( isset($_POST['submit'])) {
+		try {   
                 $user = new User();
-                $user->setFullname(($_POST['fullname']));
-                $user->setUsername(($_POST['username']));        
-                $user->setEmail(($_POST['email']));
-                $user->setEducation(($_POST['education']));
-                $user->setPassword(($_POST['password']));
-                echo("<script>console.log('verify');</script>");
+                $user->setFullname(htmlspecialchars(($_POST['fullname'])));
+                $user->setUsername(htmlspecialchars(($_POST['username'])));        
+                $user->setEmail(htmlspecialchars(($_POST['email'])));
+                $user->setEducation(htmlspecialchars(($_POST['education'])));
+                $user->setPassword(htmlspecialchars(($_POST['password'])));
+                $user->setpasswordConfirmation(htmlspecialchars(($_POST['password_confirmation'])));
             
-            if($user->emailCheck($_POST['email']) && $user->userCheck($_POST['username'])){
-                echo("<script>console.log('check');</script>");
+            if($user->emailCheck($_POST['email']) && $user->userCheck($_POST['username']) && $user->passwordCheck($_POST['password'], $_POST['password_confirmation'])){
                 if ($user->register()) {
                     $_SESSION['username'] = $user->getUsername();
-                    echo("<script>console.log('session ses');</script>");
+                    header('location: index.php');
                 }
             }else{
                 echo '<div class="alert alert-danger" id="error">Something went <strong>wrong</strong>!</div>';
             }
-            }else{
-                echo '<div class="alert alert-danger" id="error">Something went <strong>wrong</strong>!</div>';
-            }
+            
         } catch (\Throwable $th) {
                 //throw $th;
         }
@@ -71,6 +62,8 @@
                         <label for="education">Education:</label>
                         <input class="form-control" type="text" name="education" id="education" required>
                     </div>
+                    <div class="alert alert-success" id="passwordcheck" style="display:none;">Your <strong>passwords</strong> match.</div>
+                    <div class="alert alert-danger" id="passwordcheck2" style="display:none;">Your <strong>passwords</strong> don't match !</div>
                     <div class="form-group">
                         <label for="password">Password:</label>
                         <input class="form-control" type="password" name="password" id="password" required>
@@ -80,7 +73,10 @@
                         <input class="form-control" type="password" name="password_confirmation" id="password_confirmation" required>
                     </div>
                     <div class="form-group">
-                        <input class="btn btn-primary" type="submit" value="Submit">
+                        <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+                    </div>
+                    <div class="form-group">
+                        <a href="login.php" class="btn btn-primary white" name="login">Already have an account. Login</a>
                     </div>
             </form>
         </div>
@@ -88,6 +84,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script language="JavaScript" type="text/javascript" src="js/emailchecker.js"></script>
   <script language="JavaScript" type="text/javascript" src="js/userchecker.js"></script>
+  <script language="JavaScript" type="text/javascript" src="js/passwordchecker.js"></script>
   <script src="js/bootstrap.js"></script>
 </body>
 </html>
