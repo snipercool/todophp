@@ -5,3 +5,39 @@
 .white{
     color: white;
 }
+#logout{
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    z-index: 2;
+}
+#welcome{
+    animation: message 2s ease-in-out 1s 1 normal forwards;
+    opacity: 0;
+    z-index: 5;
+}
+.table tr th{
+    border-top: 0;
+}
+.tasklabel{
+    width: 25%;
+}
+.taskcontainer{
+    margin-top: 50px;
+}
+.done{
+    text-decoration: line-through;
+}
+.donebtn{
+    display: none;
+}
+@keyframes message{
+    0%{ transform: translateY(-100px);
+        opacity: 0;}
+    20%{ transform: translateY(0px);
+         opacity: 1;}
+    80%{ transform: translateY(0px);
+         opacity: 1;}
+    100%{ transform: translateY(-100px);
+         opacity: 0;}
+}

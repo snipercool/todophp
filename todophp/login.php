@@ -11,7 +11,6 @@
                 echo("<script>console.log('set');</script>");
             
                 if ($user->login()) {
-                    $_SESSION['username'] = $user->getUsername();
                     header('location: index.php');
                 }
             

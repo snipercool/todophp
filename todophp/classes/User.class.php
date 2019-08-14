@@ -153,7 +153,6 @@ require_once("Security.class.php");
                                 $statement->bindParam(':password', $password);
                                 $statement->bindParam(':education', $this->education);  
                                 $statement->execute();
-                                    return $statement;
                                     return true;
                     
                             } catch ( Throwable $t ) {
@@ -175,7 +174,8 @@ require_once("Security.class.php");
                             
                         if (!empty($result)) {
                                if (password_verify($this->password, $result['password'])){
-                                     return true;
+                                return array($_SESSION["id"] = $result['id'], $_SESSION['username'] = $result['username'], $_SESSION["email"] = $result['email'], $_SESSION["fullname"] = $result['fullname'], $_SESSION["admin"] = $result['admin'], $_SESSION["education"] = $result['education']);
+                                return true;
                                }
                         } else {
                                 return false;
@@ -198,6 +198,7 @@ require_once("Security.class.php");
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             if(!empty($result)){
                     return true;
+                    
             }else{
                     return false;
             }
@@ -245,5 +246,5 @@ require_once("Security.class.php");
         } else {
             return false;
         }
-}
+        }
     }
