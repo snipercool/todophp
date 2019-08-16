@@ -10,10 +10,11 @@
         header('location: login.php');
     }
     
-    $list = new Lists();
-    $userid = $_SESSION['id'][0];
-    $lists = $list->getAll($userid);
+    $comment = new Comment();
+    $taskid = $_GET['id'];
+    $comments = $comment->getAll($taskid);
 
+    $_SESSION["previous"] = $_SERVER["REQUEST_URI"];
     
     
 ?><!DOCTYPE html>
@@ -29,28 +30,33 @@
 
 </head>
 <body>
-    <div id="welcome" class="alert alert-light">Welcome <?php echo $_SESSION['username']?></div>
-    <a href="logout.php" class="btn btn-primary white" id="logout">Logout</a>
+    <a href="<?php echo $_SESSION["listpage"]; ?>" class="btn btn-primary white" id="logout">Go back</a>
 
-    <div class="container">
+    <div class="container taskcontainer">
+    <h1 class="title"><?php echo $_GET['name']; ?></h1>
+    <form class="form-horizontal" action="" method="post">
     <div class="create-group">
-            <input class="form-control" type="text" name="listname" id="listname" data-index="<?php echo $_SESSION['id'] ?>">
-            <input class="btn btn-success" type="submit" name="createlist" id="createlist" value="Create list">
+            <label class="tasklabel" for="name">comment:</label>
     </div>
+    <div class="create-group">
+            <input class="form-control" type="text" name="comval" id="comval" data-index="<?php echo $_GET['id'] ?>">
+            <input class="btn btn-success" type="submit" name="comment" id="comment" value="Comment">
+    </div>
+    </form>
     <table class="table">
         <thead>
             <tr>
-                <th>name</th>
-                <th>created on</th>
-                <th>delete</th>
+                <th>Comment</th>
+                <th>When commented</th>
+                <th>Update</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($lists as $l):?>
+            <?php foreach ($comments as $c):?>
                 <tr>
-                    <td><a href="list.php?id=<?php echo $l['id']; ?>&name=<?php echo $l['name']; ?>" ><?php echo $l['name']; ?></a></td>
-                    <td><p><?php echo $l['time']; ?></p></td>
-                    <td><a href="deletelist.php?list=<?php echo $l['name'] ?>&id=<?php echo $l['id'] ?>" data-index="<?php echo $l['name']; ?>" class="btn btn-danger delete">Delete</a></td>
+                    <td><p><?php echo $c['title']; ?></p></td>
+                    <td><p><?php echo $c['time']; ?></p></td>
+                    <td><a href="update.php?id=<?php echo $c['id']; ?>" class="btn btn-primary">Update</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -59,6 +65,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="js/bootstrap.js"></script>
-  <script src="js/createlist.js"></script>
+  <script src="js/createcomment.js"></script>
 </body>
 </html>

@@ -10,9 +10,13 @@
         header('location: login.php');
     }
     
+    $user = new User();
+    $users = $user->getAll();
+    $count = $user->getCount();
+
     $list = new Lists();
-    $userid = $_SESSION['id'][0];
-    $lists = $list->getAll($userid);
+    $getcount = $list->getCount();
+
 
     
     
@@ -33,24 +37,24 @@
     <a href="logout.php" class="btn btn-primary white" id="logout">Logout</a>
 
     <div class="container">
-    <div class="create-group">
-            <input class="form-control" type="text" name="listname" id="listname" data-index="<?php echo $_SESSION['id'] ?>">
-            <input class="btn btn-success" type="submit" name="createlist" id="createlist" value="Create list">
-    </div>
+        <table class="table">
+            <tr>
+                <td><p>Number of users: <?php echo implode(",", $count[0]); ?></p></td>
+                <td><p>Number of lists: <?php echo implode(",", $getcount[0]); ?></p></td>
+            </tr>
+        </table>
     <table class="table">
         <thead>
             <tr>
-                <th>name</th>
-                <th>created on</th>
-                <th>delete</th>
+                <th>users</th>
+                <th>make admin</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($lists as $l):?>
+            <?php foreach ($users as $u):?>
                 <tr>
-                    <td><a href="list.php?id=<?php echo $l['id']; ?>&name=<?php echo $l['name']; ?>" ><?php echo $l['name']; ?></a></td>
-                    <td><p><?php echo $l['time']; ?></p></td>
-                    <td><a href="deletelist.php?list=<?php echo $l['name'] ?>&id=<?php echo $l['id'] ?>" data-index="<?php echo $l['name']; ?>" class="btn btn-danger delete">Delete</a></td>
+                    <td><p><?php echo $u['username']; ?></p></td>
+                    <td><a href="<?php if ($u['admin'] == 1) { echo "makeuser.php?user=".$u['username'].""; }else {echo "makeadmin.php?user=".$u['username'].""; } ?>" class="btn btn-primary delete"><?php if ($u['admin'] == 1) { echo "Make user";}else {echo "Make admin"; } ?></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

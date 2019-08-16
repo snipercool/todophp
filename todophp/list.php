@@ -10,6 +10,8 @@
         header('location: login.php');
     }
     
+    $_SESSION["listpage"] = $_SERVER["REQUEST_URI"];
+
     $task = new Task();
     $listid = $_GET['id'];
     $tasks = $task->getAll($listid);
@@ -32,6 +34,7 @@
     <a href="index.php" class="btn btn-primary white" id="logout">Go back</a>
 
     <div class="container taskcontainer">
+    <h1 class="title"><?php echo $_GET['name']; ?></h1>
     <div class="create-group">
             <label class="tasklabel" for="name">Name:</label>
             <label class="tasklabel" for="time">Expected time:</label>
@@ -55,10 +58,10 @@
         <tbody>
             <?php foreach ($tasks as $t):?>
                 <tr>
-                    <td><p><?php echo $t['title']; ?></p></td>
+                    <td><a href="comment.php?id=<?php echo $t['id']; ?>&name=<?php echo $t['title']; ?>" ><?php echo $t['title']; ?></a></td>
                     <td><p><?php echo $t['time']; ?></p></td>
                     <td><p><?php echo $t['enddate']; ?></p></td>
-                    <td><a href="" taskid="<?php echo $t['id']; ?>"  data-index="<?php echo $t['title']; ?>" data-listid="<?php echo $listid ?>" id="done<?php echo $t['id']; ?>" class="taskbtn btn <?php if ($t['done'] == '0') {echo 'btn-danger';} else {echo 'btn-success';}?> delete"><?php if ($t['done'] == '0') {echo 'Done';} else {echo 'Undone';}?></a></td>
+                    <td><a href="" taskid="<?php echo $t['id']; ?>"  data-index="<?php echo $t['title']; ?>" data-listid="<?php echo $listid ?>" id="done<?php echo $t['id']; ?>" class="taskbtn btn <?php if ($t['done'] == '0') {echo 'btn-danger';} else {echo 'btn-success';}?> delete"><?php if ($t['done'] == '0') {echo 'Not Completed';} else {echo 'Completed';}?></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

@@ -33,7 +33,7 @@ class Lists {
     public static function deletelList($userid, $listname) {
         try {
                     $conn = Db::getInstance();
-                    $stmt = $conn->prepare("DELETE FROM `list` WHERE name = :name AND user_id = :user_id");
+                    $stmt = $conn->prepare("DELETE FROM `list` WHERE name = :name AND user_id = :user_id" );
                     $stmt->bindParam(":name", $listname);
                     $stmt->bindParam(":user_id", $userid);
                     $stmt->execute();
@@ -45,6 +45,14 @@ class Lists {
     
             }
     }
+
+    public static function getcount() {
+        $conn = Db::getInstance();
+        $statement = $conn->prepare('select count(1) FROM `list`');
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_NUM);
+        
+    } 
 }
 
 

@@ -11,7 +11,12 @@
                 echo("<script>console.log('set');</script>");
             
                 if ($user->login()) {
-                    header('location: index.php');
+                    if ($_SESSION['admin'] == 1) {
+                        header('location: admin.php');
+                    }
+                    else {
+                        header('location: index.php');
+                    }
                 }
             
         } catch (\Throwable $th) {
@@ -44,10 +49,10 @@
                         <input class="form-control" type="password" name="password" id="password" required>
                     </div>
                     <div class="form-group">
-                        <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+                        <input class="btn btn-primary" type="submit" name="submit" value="Login">
                     </div>
                     <div class="form-group">
-                        <a href="register.php" class="btn btn-primary white" name="login">Don't have an account? Register</a>
+                        <a href="register.php" class="btn btn-primary white" name="register">Don't have an account? Register</a>
                     </div>
             </form>
         </div>

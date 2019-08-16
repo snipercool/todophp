@@ -247,4 +247,48 @@ require_once("Security.class.php");
             return false;
         }
         }
+
+        public static function getAll() {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare('select * from user');
+                $statement->execute();
+                return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public static function makeadmin($username) {
+                try {
+                            $conn = Db::getInstance();
+                            $stmt = $conn->prepare("UPDATE `user` set admin = '1' WHERE username = :username" );
+                            $stmt->bindParam(":username", $username);
+                            $stmt->execute();
+                        
+                            return true;
+            
+                    } catch ( Throwable $t ) {
+                        return false;
+            
+                    }
+            }
+            public static function makeuser($username) {
+                try {
+                            $conn = Db::getInstance();
+                            $stmt = $conn->prepare("UPDATE `user` set admin = NULL WHERE username = :username" );
+                            $stmt->bindParam(":username", $username);
+                            $stmt->execute();
+                        
+                            return true;
+            
+                    } catch ( Throwable $t ) {
+                        return false;
+            
+                    }
+            }
+            public static function getcount() {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare('select count(1) FROM `user`');
+                $statement->execute();
+                return $statement->fetchAll(PDO::FETCH_NUM);
+                
+            } 
+
     }

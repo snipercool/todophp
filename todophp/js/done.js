@@ -8,8 +8,8 @@ $(".taskbtn").on("click", function(e){
         console.log(taskname);
         console.log(listid);
         
-        if ($("#done"+button_id).html() == "Done") {
-            $("#done"+button_id).html("Undone");
+        if ($("#done"+button_id).html() == "Not Completed") {
+            $("#done"+button_id).html("Completed");
             $("#done"+button_id).addClass("btn-success");
             $("#done"+button_id).removeClass("btn-danger");
             $.ajax({
@@ -26,7 +26,7 @@ $(".taskbtn").on("click", function(e){
             e.preventDefault();
         }
         else{
-            $("#done"+button_id).html("Done");
+            $("#done"+button_id).html("Not Completed");
             $("#done"+button_id).addClass("btn-danger");
             $("#done"+button_id).removeClass("btn-success");
             $.ajax({
