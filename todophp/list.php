@@ -16,6 +16,9 @@
     $listid = $_GET['id'];
     $tasks = $task->getAll($listid);
 
+    $date = date('Y-m-d');
+
+
     
     
 ?><!DOCTYPE html>
@@ -35,9 +38,10 @@
 
     <div class="container taskcontainer">
     <h1 class="title"><?php echo $_GET['name']; ?></h1>
+    <div class="alert alert-danger" id="taskerror" style="display:none;">please name your task!</div>
     <div class="create-group">
             <label class="tasklabel" for="name">Name:</label>
-            <label class="tasklabel" for="time">Expected time:</label>
+            <label class="tasklabel" for="time">Estimated time:</label>
             <label class="tasklabel" for="enddate">End date:</label>
     </div>
     <div class="create-group">
@@ -57,10 +61,18 @@
         </thead>
         <tbody>
             <?php foreach ($tasks as $t):?>
+            <?php $date1 = date('Y-m-d'); $date2 = $t['enddate']; 
+                    $d1 = strtotime($date1); $d2 = strtotime($date2);
+                    $years = date('Y', $d2) - date('Y', $d1); 
+                    $months = date('m', $d2) - date('m', $d1); 
+                    $days = date('d', $d2) - date('d', $d1);
+                    
+                   
+            ?>
                 <tr>
                     <td><a href="comment.php?id=<?php echo $t['id']; ?>&name=<?php echo $t['title']; ?>" ><?php echo $t['title']; ?></a></td>
                     <td><p><?php echo $t['time']; ?></p></td>
-                    <td><p><?php echo $t['enddate']; ?></p></td>
+                    <td><p id="<?php if ($days > 0 && $days < 3 ) {echo 'almost';} elseif ($days < 0 ) {echo 'tolate';} ?>"><?php echo $t['enddate']; ?></p></td>
                     <td><a href="" taskid="<?php echo $t['id']; ?>"  data-index="<?php echo $t['title']; ?>" data-listid="<?php echo $listid ?>" id="done<?php echo $t['id']; ?>" class="taskbtn btn <?php if ($t['done'] == '0') {echo 'btn-danger';} else {echo 'btn-success';}?> delete"><?php if ($t['done'] == '0') {echo 'Not Completed';} else {echo 'Completed';}?></a></td>
                 </tr>
             <?php endforeach; ?>

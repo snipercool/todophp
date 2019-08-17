@@ -8,7 +8,6 @@
                 $user = new User();
                 $user->setUsername(htmlspecialchars(($_POST['username'])));        
                 $user->setPassword(htmlspecialchars(($_POST['password'])));
-                echo("<script>console.log('set');</script>");
             
                 if ($user->login()) {
                     if ($_SESSION['admin'] == 1) {
@@ -39,7 +38,7 @@
     <div class="container">
         <div class="form-group">
             <form action="" method="post" enctype="multipart/form-data">
-                <h1>Sign up</h1>
+                <h1>Sign in</h1>
                     <div class="form-group">
                         <label for="username">Username:</label>
                         <input class="form-control" type="text" name="username" id="username" required>

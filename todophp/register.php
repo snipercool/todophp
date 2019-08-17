@@ -16,7 +16,7 @@
             if($user->emailCheck($_POST['email']) && $user->userCheck($_POST['username']) && $user->passwordCheck($_POST['password'], $_POST['password_confirmation'])){
                 if ($user->register()) {
                     $_SESSION['username'] = $user->getUsername();
-                    header('location: index.php');
+                    header('location: login.php');
                 }
             }else{
                 echo '<div class="alert alert-danger" id="error">Something went <strong>wrong</strong>!</div>';
@@ -56,7 +56,7 @@
                     <div class="alert alert-success" id="mailcheck" style="display:none;">Your <strong>email</strong> is ok.</div>
                     <div class="alert alert-danger" id="mailcheck2" style="display:none;">please change your <strong>email</strong>!</div>
                         <label for="email">Email:</label>
-                        <input class="form-control" type="text" name="email" id="email" required>
+                        <input class="form-control" type="email" name="email" id="email" required>
                     </div>
                     <div class="form-group">
                         <label for="education">Education:</label>

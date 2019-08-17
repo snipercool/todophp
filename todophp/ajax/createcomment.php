@@ -6,7 +6,6 @@
         $response = [];
     if( Comment::create($comment, $task) ){
         $response['status'] = 'success'; 
-        $comments = $comment->getAll();
     }
     else {
         $response['status'] = 'error';

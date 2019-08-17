@@ -14,7 +14,6 @@ class Task {
                     $statement->bindParam(":enddate", $date);
                     $statement->bindParam(":list_id", $list);
                     $statement->execute();
-                    print_r($statement->errorInfo());
                     return true;
                     
             } catch ( Throwable $t ) {
@@ -35,7 +34,6 @@ class Task {
         $statement->bindParam(':title', $taskname);
         $statement->bindParam(':list_id', $listid);
         $statement->execute();
-        print_r($statement->errorInfo());
 
         
     }
@@ -45,7 +43,6 @@ class Task {
         $statement->bindParam(':title', $taskname);
         $statement->bindParam(':list_id', $listid);
         $statement->execute();
-        print_r($statement->errorInfo());
         
     }
     public static function taskdelete($listid) {
@@ -53,7 +50,6 @@ class Task {
         $statement = $conn->prepare("DELETE FROM `task` WHERE list_id = :list_id");
         $statement->bindParam(':list_id', $listid);
         $statement->execute();
-        print_r($statement->errorInfo());
         
     }
 }

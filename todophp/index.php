@@ -13,6 +13,7 @@
     $list = new Lists();
     $userid = $_SESSION['id'][0];
     $lists = $list->getAll($userid);
+    
 
     
     
@@ -31,10 +32,12 @@
 <body>
     <div id="welcome" class="alert alert-light">Welcome <?php echo $_SESSION['username']?></div>
     <a href="logout.php" class="btn btn-primary white" id="logout">Logout</a>
+   
 
     <div class="container">
+         <div class="alert alert-danger" id="listerror" style="display:none;">please name your list!</div>
     <div class="create-group">
-            <input class="form-control" type="text" name="listname" id="listname" data-index="<?php echo $_SESSION['id'] ?>">
+            <input class="form-control" type="text" name="listname" id="listname" data-index="<?php echo $_SESSION['id'][0] ?>">
             <input class="btn btn-success" type="submit" name="createlist" id="createlist" value="Create list">
     </div>
     <table class="table">

@@ -53,6 +53,12 @@
         transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
       
 }
+#tolate{
+    color: red;
+}
+#almost{
+    color: orange;
+}
 @keyframes message{
     0%{ transform: translateY(-100px);
         opacity: 0;}

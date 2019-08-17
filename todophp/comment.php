@@ -34,6 +34,7 @@
 
     <div class="container taskcontainer">
     <h1 class="title"><?php echo $_GET['name']; ?></h1>
+    <div class="alert alert-danger" id="commenterror" style="display:none;">please enter a comment!</div>
     <form class="form-horizontal" action="" method="post">
     <div class="create-group">
             <label class="tasklabel" for="name">comment:</label>
