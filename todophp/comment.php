@@ -39,6 +39,7 @@
     </div>
     <div class="create-group">
             <input class="form-control" type="text" name="comval" id="comval" data-index="<?php echo $_GET['id'] ?>">
+            <input type="hidden" id="uri" value="<?php echo $_SERVER["REQUEST_URI"]; ?>">
             <input class="btn btn-success" type="submit" name="comment" id="comment" value="Comment">
     </div>
     </form>

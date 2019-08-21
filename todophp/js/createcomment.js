@@ -1,5 +1,6 @@
 $("#comment").on("click", function(e){
     let comment = $("#comval").val();
+    let uri = $("#uri").val();
     let task = $("#comval").data("index");
     //console.log(list);
     $.ajax({
@@ -11,6 +12,7 @@ $("#comment").on("click", function(e){
         .done(function( res ) {
             if(res.status =="success"){
                 console.log('comment created');
+                $(".table").load(uri + " .table");
 
             } else {
                 console.log('comment created failed');
