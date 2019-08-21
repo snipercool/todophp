@@ -10,9 +10,7 @@
         header('location: login.php');
     }
     
-    $comment = new Comment();
-    $taskid = $_GET['id'];
-    $comments = $comment->getAll($taskid);
+    
 
     $_SESSION["previous"] = $_SERVER["REQUEST_URI"];
     
@@ -53,7 +51,12 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($comments as $c):?>
+            <?php 
+            $comment = new Comment();
+            $taskid = $_GET['id'];
+            $comments = $comment->getAll($taskid);
+            
+            foreach ($comments as $c):?>
                 <tr>
                     <td><p><?php echo $c['title']; ?></p></td>
                     <td><p><?php echo $c['time']; ?></p></td>

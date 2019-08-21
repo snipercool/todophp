@@ -72,7 +72,7 @@
                 <tr>
                     <td><a href="comment.php?id=<?php echo $t['id']; ?>&name=<?php echo $t['title']; ?>" ><?php echo $t['title']; ?></a></td>
                     <td><p><?php echo $t['time']; ?></p></td>
-                    <td><p id="<?php if ($days > 0 && $days < 3 ) {echo 'almost';} elseif ($days < 0 ) {echo 'tolate';} ?>"><?php echo $t['enddate']; ?></p></td>
+                    <td><p id="<?php if ($days > 0 && $days < 3 ) {echo 'almost';} elseif ($days < 0 ) {echo 'tolate';} ?>"><?php echo $t['enddate']; ?></p> <p><?php echo $days, ' days remaining'; ?></p></td>
                     <td><a href="" taskid="<?php echo $t['id']; ?>"  data-index="<?php echo $t['title']; ?>" data-listid="<?php echo $listid ?>" id="done<?php echo $t['id']; ?>" class="taskbtn btn <?php if ($t['done'] == '0') {echo 'btn-danger';} else {echo 'btn-success';}?> delete"><?php if ($t['done'] == '0') {echo 'Not Completed';} else {echo 'Completed';}?></a></td>
                 </tr>
             <?php endforeach; ?>

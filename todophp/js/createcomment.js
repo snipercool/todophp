@@ -11,7 +11,6 @@ $("#comment").on("click", function(e){
         .done(function( res ) {
             if(res.status =="success"){
                 console.log('comment created');
-                location.reload();
 
             } else {
                 console.log('comment created failed');
